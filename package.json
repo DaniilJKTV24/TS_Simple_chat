@@ -1,0 +1,35 @@
+{
+  "name": "ts_chat",
+  "version": "1.0.0",
+  "description": "Simple chat using Express, Socket.io, and TypeScript (MVC)",
+  "main": "dist/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --watch src --exit ts --exec ts-node src/server.ts",
+    "build": "tsc",
+    "start": "node dist/server.js",
+    "tunnel": "ngrok http --authtoken 3000"
+  },
+  "keywords": [
+    "chat",
+    "express",
+    "socket.io",
+    "typescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "ngrok": "^5.0.0-beta.2",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
