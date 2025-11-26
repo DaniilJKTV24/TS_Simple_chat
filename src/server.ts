@@ -42,3 +42,8 @@ const io = new SocketIOServer(server, {
 // Initialize Socket.io service with event listeners
 const socketService = new SocketService(io);
 socketService.init();
+
+// Start the server
+server.listen(PORT, () => {
+  console.log(`Mario chat is running on http://localhost:${PORT}`);
+});
