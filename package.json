@@ -5,10 +5,12 @@
   "main": "dist/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js",
-    "tunnel": "ngrok http --authtoken 3000"
+    "dev": "nodemon --watch src --ext ts --exec ts-node src/server.ts",
+    "tunnel": "node tunnel.js",
+    "_tunnel_alt": "node -e \"require('dotenv').config(); require('child_process').execSync(`ngrok http ${process.env.PORT} --authtoken ${process.env.NGROK_AUTHTOKEN}`, { stdio: 'inherit' });\"",
+    "dev:tunnel": "concurrently \"npm run dev\" \"npm run tunnel\""
   },
   "keywords": [
     "chat",
@@ -20,7 +22,10 @@
   "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "dotenv-cli": "^11.0.0",
     "express": "^5.1.0",
+    "fs": "^0.0.1-security",
     "ngrok": "^5.0.0-beta.2",
     "socket.io": "^4.8.1"
   },

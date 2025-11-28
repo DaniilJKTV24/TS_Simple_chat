@@ -9,7 +9,7 @@ export class SocketService {
   public init(): void {
     this.io.on("connection", (socket: Socket) => {
       // Log which client connected (using socket ID)
-      console.log(`Player connected: ${socket.id}`);
+      console.log(`Chatter connected: ${socket.id}`);
 
       // Send the current chat history to the newly connected client
       socket.emit("chat:init", chatModel.getAll());
@@ -19,7 +19,7 @@ export class SocketService {
 
       // Log when a client disconnects; no additional logic needed for now
       socket.on("disconnect", () => {
-        console.log(`Player disconnected: ${socket.id}`);
+        console.log(`Chatter disconnected: ${socket.id}`);
       });
     });
   }
