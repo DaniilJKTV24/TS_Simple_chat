@@ -3,6 +3,8 @@ export interface ChatMessage {
   id: number;
   // Name of the sender, displayed in the UI
   author: string;
+  // Note of the sender, displayed in the UI
+  note: string;
   // Message content
   text: string;
   // Timestamp (UTC, ms) used to display human-readable time on the client
@@ -24,8 +26,9 @@ export class ChatModel {
   }
 
   // Add a new message and return it so it can be sent to clients
-  public add(author: string, text: string): ChatMessage {
+  public add(author: string, note: string, text: string): ChatMessage {
     const trimmedAuthor = author.trim() || "Anonymous";
+    const trimmedNote = note.trim();
     const trimmedText = text.trim();
 
     // Ignore empty messages to avoid cluttering the chat
@@ -36,6 +39,7 @@ export class ChatModel {
     const message: ChatMessage = {
       id: this.nextId++,
       author: trimmedAuthor.slice(0, 30), // Limit name length
+      note: trimmedNote.slice(0, 60), // Limit note length
       text: trimmedText.slice(0, 500), // Limit message size
       timestamp: Date.now(),
     };

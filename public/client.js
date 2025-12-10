@@ -2,6 +2,7 @@
   // Cache commonly used DOM elements for later use
   const messagesEl = document.getElementById('messages');
   const authorEl = document.getElementById('author');
+  const noteEl = document.getElementById('note');
   const messageEl = document.getElementById('message');
   const sendBtn = document.getElementById('send');
   const feedbackEl = document.getElementById('feedback');
@@ -14,6 +15,12 @@
   const savedName = localStorage.getItem("mkchat:name");
   if (savedName && authorEl instanceof HTMLInputElement) {
     authorEl.value = savedName;
+  }
+
+  // Load previously saved user note from localStorage, if available
+  const savedNote = localStorage.getItem("mkchat:note");
+  if (savedNote && noteEl instanceof HTMLInputElement) {
+    noteEl.value = savedNote;
   }
 
   // Utility function to update the server status indicator
@@ -47,14 +54,18 @@
     author.className = "message__author";
     author.textContent = message.author;
 
+    const note = document.createElement("span");
+    note.className = "message__note";
+    note.textContent = message.note;
+
     const time = document.createElement("time");
     time.className = "message__time";
     time.textContent = formatTime(message.timestamp);
 
-    meta.append(author, time);
+    meta.append(author, note, time);
 
     const text = document.createElement("p");
-    text.className = "message__text"; // fixed typo
+    text.className = "message__text";
     text.textContent = message.text;
 
     container.append(meta, text);
@@ -102,6 +113,7 @@
   // Send a message to the server
   const sendMessage = () => {
     const author = authorEl.value.trim() || "Anonymous";
+    const note = noteEl.value.trim();
     const text = messageEl.value.trim();
 
     if (!text) {
@@ -112,10 +124,13 @@
     // Save the user name in localStorage for convenience
     localStorage.setItem("mkchat:name", author);
 
+    // Save the user note in localStorage for convenience
+    localStorage.setItem("mkchat:note", note);
+
     sendBtn.disabled = true;
     showFeedback("Sending...");
 
-    socket.emit("chat:send", { author, text }, (err) => {
+    socket.emit("chat:send", { author, note, text }, (err) => {
       sendBtn.disabled = false;
       if (err) {
         showFeedback(err, true);

@@ -29,13 +29,14 @@ export class SocketService {
     socket.on(
       "chat:send",
       (
-        payload: { author: string; text: string },
+        payload: { author: string; note: string; text: string },
         callback?: (err?: string) => void
       ) => {
         try {
           // Save the message via the model; validation happens inside the model
           const message: ChatMessage = chatModel.add(
             payload.author,
+            payload.note,
             payload.text
           );
 

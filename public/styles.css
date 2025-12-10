@@ -307,7 +307,7 @@ h1 {
   color: #0d3b66;
 }
 
-.message__author {
+.message__author, .message__note {
   display: inline-flex;
   gap: 8px;
   align-items: center;
@@ -316,6 +316,12 @@ h1 {
 .message__author::before {
   content: "★";
   color: var(--sun);
+  text-shadow: 0 2px 0 #d59c23;
+}
+
+.message__note::before {
+  content: "✵";
+  color: var(--brick);
   text-shadow: 0 2px 0 #d59c23;
 }
 
