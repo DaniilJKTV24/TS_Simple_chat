@@ -14,14 +14,25 @@ export class SocketService {
       // Send the current chat history to the newly connected client
       socket.emit("chat:init", chatModel.getAll());
 
+      // Send updated user count to all clients
+      this.emitUserCount();
+
       // Set up the handler for sending messages
       this.handleSendMessage(socket);
 
       // Log when a client disconnects; no additional logic needed for now
       socket.on("disconnect", () => {
         console.log(`Chatter disconnected: ${socket.id}`);
+
+        // Update user count on disconnect
+        this.emitUserCount();
       });
     });
+  }
+
+  private emitUserCount(): void {
+    const count = this.io.engine.clientsCount; // Currently connected sockets
+    this.io.emit("users:count", count);        // Broadcast to all clients
   }
 
   // Handle the event triggered when a client sends a new message

@@ -7,6 +7,7 @@
   const sendBtn = document.getElementById('send');
   const feedbackEl = document.getElementById('feedback');
   const statusPill = document.getElementById('status-pill');
+  const userCountEl = document.getElementById("user-count");
 
   // Establish a connection to the Socket.io server
   const socket = io();
@@ -161,6 +162,12 @@
   // Socket.io event subscriptions
   socket.on("connect", () => setStatus("Online", true));
   socket.on("disconnect", () => setStatus("Offline", false));
+
+  socket.on("users:count", (count) => {
+    if (userCountEl) {
+      userCountEl.textContent = `${count} user(s) online`;
+    }
+  });
 
   // Receive full chat history from server upon connection
   socket.on("chat:init", (messages) => renderMessages(messages));
