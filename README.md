@@ -53,7 +53,7 @@ project/
 1. Clone the repository:
 
 ```bash
-git clone <https://github.com/DaniilJKTV24/TS_Simple_chat>
+git clone https://github.com/DaniilJKTV24/TS_Simple_chat
 ```
 
 2. Install dependencies:
